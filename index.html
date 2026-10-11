@@ -7,190 +7,168 @@
   <meta name="theme-color" content="#104b52">
   <title>Para mamá, con amor</title>
 
-  <style>
-    
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
+ 
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    * {
-      box-sizing: border-box;
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: #f7eee3;
+    color: #49372f;
+    font-family: Georgia, "Times New Roman", serif;
+    text-align: center;
+  }
+
+  main {
+    width: 100%;
+    height: 100%;
+  }
+
+  .escena {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #302923;
+  }
+
+  #video {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.38)
+    );
+    pointer-events: none;
+  }
+
+  #historia {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 88%;
+    padding: 12px;
+    color: #fffaf2;
+    font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+    line-height: 1.4;
+    text-align: center;
+    text-wrap: balance;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    opacity: 1;
+    transition: opacity 0.45s ease;
+  }
+
+  #iniciar {
+    position: absolute;
+    z-index: 3;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    padding: 16px 30px;
+    color: #fff;
+    background: rgba(40, 30, 25, 0.8);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  #final {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 35px 18px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    background: #104b52;
+    color: #ffffff;
+  }
+
+  #final h1 {
+    margin: 0 0 18px;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  #final h2 {
+    margin: 0 0 35px;
+    font-size: clamp(2rem, 7vw, 3rem);
+    text-align: center;
+  }
+
+  #final p {
+    margin: 8px 0;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .firma {
+    font-weight: bold;
+    letter-spacing: 0.08em;
+  }
+
+  #repetir {
+    margin-top: 30px;
+    padding: 14px 26px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    background: transparent;
+    color: #ffffff;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .escribiendo {
+    border-right: 2px solid white;
+    padding-right: 2px;
+    animation: cursor 0.7s step-end infinite;
+  }
+
+  @keyframes cursor {
+    50% {
+      border-color: transparent;
     }
+  }
 
-    body {
-      margin: 0;
-      background: #f7eee3;
-      color: #49372f;
-      font-family: Georgia, "Times New Roman", serif;
-      text-align: center;
-    }
-
-   
-    .escena {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      height: 100svh;
-      min-height: 0;
-      overflow: hidden;
-      background: #302923;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    @media (min-width: 601px) {
-      .escena {
-        width: min(100%, 450px);
-        height: auto;
-        aspect-ratio: 9 / 16;
-        min-height: 0;
-        margin: 0 auto;
-      }
-    }
-
-
-   
-    @media (max-width: 600px) {
-      .escena {
-        position: fixed;
-        inset: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        min-height: 0;
-        aspect-ratio: auto;
-        margin: 0;
-      }
-    }
-
-
-
-    #video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .velo {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.08),
-        rgba(0, 0, 0, 0.38)
-      );
-      pointer-events: none;
-    }
-
+  @media (prefers-reduced-motion: reduce) {
     #historia {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      width: 88%;
-      padding: 12px;
-      color: #fffaf2;
-      font-size: clamp(1.5rem, 5.5vw, 2.2rem);
-      line-height: 1.4;
-      text-align: center;
-      text-wrap: balance;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-      opacity: 1;
-      transition: opacity 0.45s ease;
-    }
-
-    #iniciar {
-      position: absolute;
-      z-index: 3;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 30px;
-      padding: 16px 30px;
-      color: #fff;
-      background: rgba(40, 30, 25, 0.8);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    #final {
-      display: none;
-      min-height: 100svh;
-      padding: 35px 18px;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 12px;
-      background: #104b52;
-      color: #ffffff;
-    }
-
-    #final h1 {
-      margin: 0 0 18px;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      line-height: 1.2;
-      text-align: center;
-    }
-
-    #final h2 {
-      margin: 0 0 35px;
-      font-size: clamp(2rem, 7vw, 3rem);
-      text-align: center;
-    }
-
-    #final p {
-      margin: 8px 0;
-      font-size: clamp(1.4rem, 5vw, 1.8rem);
-      text-align: center;
-      overflow-wrap: anywhere;
-    }
-
-    .firma {
-      font-weight: bold;
-      letter-spacing: 0.08em;
-    }
-
-    #repetir {
-      margin-top: 30px;
-      padding: 14px 26px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 25px;
-      background: transparent;
-      color: #ffffff;
-      font-size: 1.1rem;
-      cursor: pointer;
+      transition: none;
     }
 
     .escribiendo {
-      border-right: 2px solid white;
-      padding-right: 2px;
-      animation: cursor 0.7s step-end infinite;
+      animation: none;
     }
+  }
+</style>
 
-    @keyframes cursor {
-      50% {
-        border-color: transparent;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #historia {
-        transition: none;
-      }
-
-      .escribiendo {
-        animation: none;
-      }
-    }
-  </style>
 </head>
 
 <body>
