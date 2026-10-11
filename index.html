@@ -1,11 +1,237 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Para mamá</title>
+  <meta name="theme-color" content="#f7eee3">
+  <title>Para mamá, con amor</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f7eee3;
+      color: #49372f;
+      font-family: Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
+
+    .escena {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      min-height: 480px;
+      overflow: hidden;
+      background: #302923;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .velo {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.08),
+        rgba(0, 0, 0, 0.38)
+      );
+    }
+
+    #historia {
+      position: relative;
+      z-index: 2;
+      width: min(88%, 650px);
+      padding: 20px;
+      color: #fffaf2;
+      font-size: clamp(1.35rem, 4.5vw, 2.2rem);
+      line-height: 1.5;
+      text-wrap: balance;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+      opacity: 1;
+      transition: opacity 0.45s ease;
+    }
+
+    #iniciar {
+      position: absolute;
+      z-index: 3;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 30px;
+      padding: 12px 24px;
+      color: #fff;
+      background: rgba(40, 30, 25, .65);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #final {
+      display: none;
+      min-height: 100svh;
+      padding: 55px 22px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: #f7eee3;
+      color: #65483c;
+    }
+
+    #final h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      line-height: 1.2;
+    }
+
+    #final h2 {
+      margin: 0 0 42px;
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+    }
+
+    #final p {
+      margin: 8px 0;
+      font-size: clamp(1.15rem, 4vw, 1.5rem);
+    }
+
+    .firma {
+      font-weight: bold;
+      letter-spacing: 0.08em;
+    }
+
+    #repetir {
+      margin-top: 35px;
+      padding: 12px 22px;
+      border: 1px solid #a88773;
+      border-radius: 25px;
+      background: transparent;
+      color: #65483c;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
+
+  <main>
+    <section class="escena" id="escena">
+      <video id="video" autoplay muted playsinline preload="auto">
+        <source src="videomadre.mp4" type="video/mp4">
+        Tu navegador no puede reproducir este video.
+      </video>
+
+      <div class="velo"></div>
+
+      <div id="historia" aria-live="polite">
+        En mis días tristes y en los más felices,
+      </div>
+
+      <button id="iniciar" type="button">Ver historia</button>
+    </section>
+
+    <section id="final">
+      <h1>FELIZ DÍA, MAMÁ.</h1>
+      <h2>TE QUIERO.</h2>
+      <p class="firma">FULANO DE TAL</p>
+      <p>18-10-2026</p>
+      <button id="repetir" type="button">Volver a ver</button>
+    </section>
+  </main>
+
+  <script>
+    const video = document.getElementById("video");
+    const historia = document.getElementById("historia");
+    const escena = document.getElementById("escena");
+    const final = document.getElementById("final");
+    const iniciar = document.getElementById("iniciar");
+    const repetir = document.getElementById("repetir");
+
+    const frases = [
+      { inicio: 0, fin: 4, texto: "En mis días tristes y en los más felices," },
+      { inicio: 4, fin: 7, texto: "en mis logros y mis fracasos," },
+      { inicio: 7, fin: 11, texto: "siempre estuviste allí, mamá, con tu amor incondicional." },
+      { inicio: 11, fin: 15, texto: "Desde una curita en mi rodilla hasta un abrazo en el momento justo," },
+      { inicio: 15, fin: 19, texto: "tus pequeños gestos fueron construyendo la persona que hoy soy." },
+      { inicio: 19, fin: 24, texto: "Gracias por cuidarme, por creer en mí y por quererme como solo tú sabes hacerlo." },
+      { inicio: 24, fin: 29, texto: "Si volviera a nacer, volvería a elegirte." }
+    ];
+
+    let fraseActual = -1;
+
+    function actualizarHistoria() {
+      const tiempo = video.currentTime;
+      const indice = frases.findIndex(
+        frase => tiempo >= frase.inicio && tiempo < frase.fin
+      );
+
+      if (indice !== -1 && indice !== fraseActual) {
+        fraseActual = indice;
+        historia.style.opacity = 0;
+
+        setTimeout(() => {
+          historia.textContent = frases[indice].texto;
+          historia.style.opacity = 1;
+        }, 250);
+      }
+    }
+
+    function mostrarFinal() {
+      escena.style.display = "none";
+      final.style.display = "flex";
+    }
+
+    function comenzar() {
+      final.style.display = "none";
+      escena.style.display = "flex";
+      fraseActual = -1;
+      video.currentTime = 0;
+      historia.textContent = frases[0].texto;
+      historia.style.opacity = 1;
+      iniciar.style.display = "none";
+
+      const reproduccion = video.play();
+      if (reproduccion) {
+        reproduccion.catch(() => {
+          iniciar.style.display = "block";
+        });
+      }
+    }
+
+    video.addEventListener("timeupdate", actualizarHistoria);
+    video.addEventListener("ended", mostrarFinal);
+
+    iniciar.addEventListener("click", () => {
+      iniciar.style.display = "none";
+      video.play().catch(() => {
+        iniciar.style.display = "block";
+      });
+    });
+
+    repetir.addEventListener("click", comenzar);
+
+    video.addEventListener("playing", () => {
+      iniciar.style.display = "none";
+    });
+
+    video.addEventListener("error", () => {
+      iniciar.textContent = "No se pudo cargar el video";
+      iniciar.style.display = "block";
+    });
+  </script>
 
 </body>
 </html>
+
