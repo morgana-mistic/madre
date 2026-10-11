@@ -20,11 +20,13 @@
       text-align: center;
     }
 
+   
     .escena {
       position: relative;
       width: 100%;
+      height: 100vh;
       height: 100svh;
-      min-height: 480px;
+      min-height: 0;
       overflow: hidden;
       background: #302923;
       display: flex;
@@ -32,7 +34,6 @@
       justify-content: center;
     }
 
-    
     @media (min-width: 601px) {
       .escena {
         width: min(100%, 450px);
@@ -42,6 +43,7 @@
         margin: 0 auto;
       }
     }
+
 
     @media (max-width: 600px) {
       .escena {
@@ -60,7 +62,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: fill;
     }
 
     .velo {
